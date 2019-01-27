@@ -43,8 +43,7 @@ export class TimeMachineComponent implements OnInit {
   @Input('activeIndex')
   set activeIndex(value: number) {
     if (value != this._activeIndex) {
-      this._activeIndex = value;
-      this.setActive(this._activeIndex);
+      this.setActive(value);
     }
   }
 

@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
 
   maxTranslateZ = -5000;
 
+  // Optionally use ViewChild to get a reference to the time machine and call it's functions.
   // @ViewChild("timeMachine") timeMachine: TimeMachineComponent;
 
   boundTrackByFn: Function;
@@ -73,8 +74,10 @@ export class AppComponent implements OnInit {
   
   // Capture the active index for the slider.
   contentActive(event: TimeMachineContentActiveEvent) {
-    console.log(`AppComponent::contentActive() event=${JSON.stringify(event)}`);
-    this.activeIndex = event.content.index;
+    if (event.content.active) {
+      // Use setTimeout() to avoid ExpressionChangedAfterItHasBeenCheckedError with slider
+      setTimeout(() => this.activeIndex = event.content.index);
+    }
   }
 
   // Defer setting the img src attribute until the content is visible.
@@ -86,6 +89,7 @@ export class AppComponent implements OnInit {
 
   // Capture the slider index for the time machine.
   sliderChange(event: MatSliderChange) {
+    // Optionally use ViewChild to get a reference to the time machine and call it's functions.
     // this.timeMachine.setActive(event.value);
     this.activeIndex = event.value;
   }
