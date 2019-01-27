@@ -1,0 +1,55 @@
+<mat-slider
+  [vertical]="true"
+  [min]="0"
+  [max]="MAX_DATA_OBJECTS - 1"
+  [step]="1"
+  [value]="activeIndex"
+  (change)="sliderChange($event)">
+</mat-slider>
+<!-- Default Behavior -->
+<time-machine
+  #timeMachine
+  class="flex-grow-1"
+  width="480px"
+  height="320px"
+  contentClass="mat-elevation-z8"
+  [data]="data"
+  [trackByFn]="boundTrackByFn"
+  (contentActive)="contentActive($event)"
+  (contentVisible)="contentVisible($event)">
+  <mat-card class="time-machine-content"
+    *timeMachineContent="let content"
+    [ngClass]="{'active': content.active}">
+    <h2>ID: {{content.data.id}}</h2>
+    <p class="img"><img [src]="content.data.imgSrc"></p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, maxime.</p>
+  </mat-card>
+</time-machine>
+<!-- Custom Sinusoidal Behavior -->
+<!-- <time-machine
+  #timeMachine
+  class="flex-grow-1"
+  width="480px"
+  height="320px"
+  contentClass="mat-elevation-z8"
+  [data]="data"
+  [trackByFn]="boundTrackByFn"
+  perspective="1000px"
+  transition="all 1s"
+  [translateX]="translateX"
+  [translateY]="translateY"
+  [translateZ]="translateZ"
+  [rotateX]="rotateX"
+  [maxTranslateZ]="maxTranslateZ"
+  (initContent)="initContent($event)"
+  (transformContent)="transformContent($event)"
+  (contentActive)="contentActive($event)"
+  (contentVisible)="contentVisible($event)">
+  <mat-card class="time-machine-content"
+    *timeMachineContent="let content"
+    [ngClass]="{'active': content.active}">
+    <h2>ID: {{content.data.id}}</h2>
+    <p class="img"><img [src]="content.data.imgSrc"></p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, maxime.</p>
+  </mat-card>
+</time-machine> -->
