@@ -34,19 +34,6 @@ export class TimeMachineComponent implements OnInit {
 
   @Input() data = new Array<any>();
 
-  _activeIndex: number;
-
-  get activeIndex(): number {
-    return this._activeIndex;
-  }
-
-  @Input('activeIndex')
-  set activeIndex(value: number) {
-    if (value != this._activeIndex) {
-      this.setActive(value);
-    }
-  }
-
   @Input() trackByFn: Function;
 
   @Input() contentClass: string;
@@ -62,6 +49,8 @@ export class TimeMachineComponent implements OnInit {
   @ContentChild(TimeMachineContentDirective, {read: TemplateRef}) contentTemplate;
 
   content = new Array<TimeMachineContent>();
+
+  activeIndex: number;
 
   constructor() { }
 
@@ -114,7 +103,7 @@ export class TimeMachineComponent implements OnInit {
     var event = window.event || event; // old IE support
     var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
-    if ((this._activeIndex === 0 && delta === 1) || (this._activeIndex === this.content.length - 1 && delta === -1)) {
+    if ((this.activeIndex === 0 && delta === 1) || (this.activeIndex === this.content.length - 1 && delta === -1)) {
       return;
     }
 
@@ -168,7 +157,7 @@ export class TimeMachineComponent implements OnInit {
 
     // Check and set after emitting event to prevent recursion.
     if (content.active) {
-      this._activeIndex = index;
+      this.activeIndex = index;
     }
 
     content.prevActive = content.active;
@@ -188,7 +177,7 @@ export class TimeMachineComponent implements OnInit {
   }
 
   public setActive(index: number) {
-    let delta = index - this._activeIndex;
+    let delta = index - this.activeIndex;
     for (let i=0; i<this.content.length; i++) {
       let content = this.content[i];
       if (this.transformContent.observers.length > 0) {
