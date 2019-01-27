@@ -7,13 +7,14 @@
   (change)="sliderChange($event)">
 </mat-slider>
 <!-- Default Behavior -->
-<time-machine
+<!-- <time-machine
   #timeMachine
   class="flex-grow-1"
   width="480px"
   height="320px"
   contentClass="mat-elevation-z8"
   [data]="data"
+  [activeIndex]="activeIndex"
   [trackByFn]="boundTrackByFn"
   (contentActive)="contentActive($event)"
   (contentVisible)="contentVisible($event)">
@@ -24,15 +25,16 @@
     <p class="img"><img [src]="content.data.imgSrc"></p>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, maxime.</p>
   </mat-card>
-</time-machine>
+</time-machine> -->
 <!-- Custom Sinusoidal Behavior -->
-<!-- <time-machine
+<time-machine
   #timeMachine
   class="flex-grow-1"
   width="480px"
   height="320px"
   contentClass="mat-elevation-z8"
   [data]="data"
+  [activeIndex]="activeIndex"
   [trackByFn]="boundTrackByFn"
   perspective="1000px"
   transition="all 1s"
@@ -52,4 +54,4 @@
     <p class="img"><img [src]="content.data.imgSrc"></p>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, maxime.</p>
   </mat-card>
-</time-machine> -->
+</time-machine>

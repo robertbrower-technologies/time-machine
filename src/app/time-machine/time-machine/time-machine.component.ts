@@ -34,6 +34,21 @@ export class TimeMachineComponent implements OnInit {
 
   @Input() data = new Array<any>();
 
+  _activeIndex: number;
+
+  get activeIndex(): number {
+    return this._activeIndex;
+  }
+
+  @Input('activeIndex')
+  set activeIndex(value: number) {
+    debugger;
+    if (value != this._activeIndex) {
+      this._activeIndex = value;
+      this.setActive(this._activeIndex);
+    }
+  }
+
   @Input() trackByFn: Function;
 
   @Input() contentClass: string;
@@ -49,8 +64,6 @@ export class TimeMachineComponent implements OnInit {
   @ContentChild(TimeMachineContentDirective, {read: TemplateRef}) contentTemplate;
 
   content = new Array<TimeMachineContent>();
-
-  activeIndex: number;
 
   constructor() { }
 
@@ -103,7 +116,7 @@ export class TimeMachineComponent implements OnInit {
     var event = window.event || event; // old IE support
     var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
-    if ((this.activeIndex === 0 && delta === 1) || (this.activeIndex === this.content.length - 1 && delta === -1)) {
+    if ((this._activeIndex === 0 && delta === 1) || (this._activeIndex === this.content.length - 1 && delta === -1)) {
       return;
     }
 
@@ -146,17 +159,18 @@ export class TimeMachineComponent implements OnInit {
 
   checkForEvents(content: TimeMachineContent, index: number) {
     content.active = content.translateZ === 0;
-    content.visible = content.translateZ <= 0 && content.translateZ >= this.maxTranslateZ;
-
-    if (content.active) {
-      this.activeIndex = index;
-    }
+    content.visible = content.translateZ <= 0 && content.translateZ >= this.maxTranslateZ;  
     
     if (content.active != content.prevActive) {
       let event = new TimeMachineContentActiveEvent();
       event.content = content;
       event.index = index;
       this.contentActive.emit(event);
+    }
+
+    // Check and set after emitting event to prevent recursion.
+    if (content.active) {
+      this._activeIndex = index;
     }
 
     content.prevActive = content.active;
@@ -176,7 +190,7 @@ export class TimeMachineComponent implements OnInit {
   }
 
   public setActive(index: number) {
-    let delta = index - this.activeIndex;
+    let delta = index - this._activeIndex;
     for (let i=0; i<this.content.length; i++) {
       let content = this.content[i];
       if (this.transformContent.observers.length > 0) {

@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   data = new Array<any>();
 
-  activeIndex = 0;
+  activeIndex;
 
   translateX = -200;
 
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
   maxTranslateZ = -5000;
 
-  @ViewChild("timeMachine") timeMachine: TimeMachineComponent;
+  // @ViewChild("timeMachine") timeMachine: TimeMachineComponent;
 
   boundTrackByFn: Function;
   
@@ -86,7 +86,8 @@ export class AppComponent implements OnInit {
 
   // Capture the slider index for the time machine.
   sliderChange(event: MatSliderChange) {
-    this.timeMachine.setActive(event.value);
+    // this.timeMachine.setActive(event.value);
+    this.activeIndex = event.value;
   }
 
 }
